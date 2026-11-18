@@ -1,0 +1,203 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Starlit Dreams | Whispers of Verse</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #0d0d0f;
+  --deep: #111116;
+  --surface: #16161d;
+  --card: #1c1c25;
+  --border: rgba(255,255,255,0.07);
+  --border-hover: rgba(255,255,255,0.18);
+  --gold: #c9a96e;
+  --gold-dim: rgba(201,169,110,0.15);
+  --gold-glow: rgba(201,169,110,0.08);
+  --mist: rgba(255,255,255,0.55);
+  --mist-dim: rgba(255,255,255,0.28);
+  --white: #f5f0e8;
+  --serif: 'Cormorant Garamond', serif;
+  --display: 'Cinzel', serif;
+  --sans: 'Raleway', sans-serif;
+  --transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html {
+  scroll-behavior: smooth;
+  background-color: var(--deep);
+  color: var(--white);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.6;
+}
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  background: linear-gradient(135deg, var(--deep) 0%, var(--surface) 100%);
+}
+header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+h1 {
+  font-family: var(--display);
+  font-size: 3rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--gold);
+  text-shadow: 0 0 10px var(--gold-glow);
+}
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: var(--card);
+  border-radius: 10px;
+  box-shadow: 0 10px 30px var(--deep);
+  border: 1px solid var(--border);
+}
+.poem {
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background-color: var(--surface);
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.poem:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px var(--gold-glow);
+}
+.poem-title {
+  font-family: var(--serif);
+  font-size: 2rem;
+  font-weight: 400;
+  margin-bottom: 1rem;
+  color: var(--gold);
+  text-align: center;
+}
+.poem-content {
+  font-family: var(--serif);
+  font-size: 1.2rem;
+  line-height: 1.8;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+.poem-author {
+  font-family: var(--sans);
+  font-size: 1rem;
+  color: var(--mist);
+  text-align: right;
+  margin-top: 1rem;
+}
+nav {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+nav a {
+  padding: 0.75rem 1.5rem;
+  background-color: var(--gold);
+  color: var(--deep);
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: 500;
+  transition: background-color var(--transition), transform var(--transition);
+}
+nav a:hover {
+  background-color: var(--white);
+  transform: translateY(-2px);
+}
+footer {
+  text-align: center;
+  margin-top: 2rem;
+  padding: 1rem;
+  color: var(--mist);
+  font-size: 0.9rem;
+}
+
+/* RESPONSIVE — tablet */
+@media (max-width: 768px) {
+  body { padding: 1.5rem; }
+  h1 { font-size: 2.2rem; }
+  main { padding: 1.5rem; width: 100%; }
+  .poem { padding: 1.25rem; }
+  .poem-title { font-size: 1.7rem; }
+  .poem-content { font-size: 1.1rem; }
+  nav { flex-wrap: wrap; gap: 0.75rem; }
+  nav a { padding: 0.65rem 1.2rem; font-size: 0.85rem; }
+}
+
+/* RESPONSIVE — small mobile */
+@media (max-width: 480px) {
+  body { padding: 1rem; }
+  h1 { font-size: 1.75rem; letter-spacing: 0.08em; }
+  main { padding: 1rem; border-radius: 8px; }
+  .poem { padding: 1rem; border-radius: 6px; }
+  .poem-title { font-size: 1.4rem; }
+  .poem-content {
+    font-size: 1rem;
+    line-height: 1.75;
+  }
+  /* Prevent <pre> from causing horizontal scroll */
+  .poem-content pre {
+    white-space: pre-wrap;
+    word-break: break-word;
+    font-family: inherit;
+    font-size: inherit;
+    text-align: center;
+  }
+  .poem-author { font-size: 0.88rem; }
+  nav { gap: 0.6rem; }
+  nav a { padding: 0.55rem 1rem; font-size: 0.8rem; }
+  footer { font-size: 0.8rem; margin-top: 1.5rem; }
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>Whispers of Verse</h1>
+</header>
+<main>
+  <article class="poem">
+    <h2 class="poem-title">Starlit Dreams</h2>
+    <div class="poem-content">
+      <pre>
+    Beneath the canvas of the night,
+    Stars weave tales of pure delight.
+    Each a dream, a wish, a spark,
+    Lighting up the endless dark.
+
+    In their glow, we find our way,
+    Through the night and break of day.
+    Dreams like stars, they guide, they gleam,
+    In the quiet of a starlit dream.
+
+    Hold them close, let them shine bright,
+    In the stillness of the night.
+    Starlit dreams, they dance, they play,
+    In the heart, they'll always stay.
+    </pre>
+    </div>
+    <p class="poem-author"> Sample</p>
+  </article>
+  <nav>
+    <a href="index.html">Home</a>
+  </nav>
+</main>
+<footer>
+  <p>© 2023 Whispers of Verse. All poems are the property of their respective authors.</p>
+</footer>
+</body>
+</html>

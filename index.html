@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Whispers of Verse | Poetry Showcase</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #0d0d0f;
+  --deep: #111116;
+  --surface: #16161d;
+  --card: #1c1c25;
+  --border: rgba(255,255,255,0.07);
+  --border-hover: rgba(255,255,255,0.18);
+  --gold: #c9a96e;
+  --gold-dim: rgba(201,169,110,0.15);
+  --gold-glow: rgba(201,169,110,0.08);
+  --mist: rgba(255,255,255,0.55);
+  --mist-dim: rgba(255,255,255,0.28);
+  --white: #f5f0e8;
+  --serif: 'Cormorant Garamond', serif;
+  --display: 'Cinzel', serif;
+  --sans: 'Raleway', sans-serif;
+  --transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--serif);
+  background: var(--ink);
+  color: var(--white);
+  line-height: 1.8;
+  overflow-x: hidden;
+}
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.6;
+}
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--ink); }
+::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 2px; }
+
+/* HEADER */
+header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 22px 5%;
+  transition: var(--transition);
+}
+header.scrolled {
+  background: rgba(13,13,15,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 5%;
+}
+.logo {
+  font-family: var(--display);
+  font-size: 1.1rem;
+  letter-spacing: 0.2em;
+  color: var(--gold);
+  text-decoration: none;
+}
+nav { display: flex; align-items: center; gap: 36px; }
+nav a {
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  color: var(--mist);
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color var(--transition);
+  position: relative;
+}
+nav a::after {
+  content: '';
+  position: absolute;
+  bottom: -3px; left: 0;
+  width: 0; height: 1px;
+  background: var(--gold);
+  transition: width var(--transition);
+}
+nav a:hover { color: var(--gold); }
+nav a:hover::after { width: 100%; }
+.nav-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+.nav-toggle span { display: block; width: 22px; height: 1px; background: var(--gold); }
+
+/* HERO */
+.hero {
+  min-height: 100vh;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 140px 5% 100px;
+  overflow: hidden;
+}
+.hero-img {
+  position: absolute;
+  inset: 0;
+  background-image: url('https://images.unsplash.com/photo-1455390582262-044cdead277a?w=1600&q=80&fit=crop&auto=format');
+  background-size: cover;
+  background-position: center 30%;
+  animation: slowZoom 22s ease-in-out infinite alternate;
+}
+@keyframes slowZoom {
+  from { transform: scale(1.0); }
+  to   { transform: scale(1.1); }
+}
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to bottom, rgba(13,13,15,0.6) 0%, rgba(13,13,15,0.15) 45%, rgba(13,13,15,0.78) 100%),
+    linear-gradient(135deg, rgba(0,0,0,0.45) 0%, transparent 60%);
+}
+.hero-content { position: relative; z-index: 2; max-width: 780px; }
+.hero-eyebrow {
+  font-family: var(--sans);
+  font-size: 0.68rem;
+  letter-spacing: 0.35em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 28px;
+  opacity: 0;
+  animation: fadeUp 1s ease 0.3s forwards;
+}
+.hero h1 {
+  font-family: var(--display);
+  font-size: clamp(3rem, 8vw, 6.5rem);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: 0.05em;
+  color: var(--white);
+  margin-bottom: 30px;
+  text-shadow: 0 2px 40px rgba(0,0,0,0.5);
+  opacity: 0;
+  animation: fadeUp 1s ease 0.5s forwards;
+}
+.hero h1 em { font-family: var(--serif); font-style: italic; color: var(--gold); font-size: 1.1em; }
+.hero-sub {
+  font-size: 1.2rem;
+  color: rgba(245,240,232,0.82);
+  font-style: italic;
+  max-width: 520px;
+  margin: 0 auto 48px;
+  line-height: 1.9;
+  text-shadow: 0 1px 12px rgba(0,0,0,0.6);
+  opacity: 0;
+  animation: fadeUp 1s ease 0.7s forwards;
+}
+.btn {
+  display: inline-block;
+  padding: 14px 40px;
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  text-decoration: none;
+  background: rgba(13,13,15,0.45);
+  backdrop-filter: blur(6px);
+  cursor: pointer;
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+  opacity: 0;
+  animation: fadeUp 1s ease 0.9s forwards;
+}
+.btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--transition);
+}
+.btn:hover::before { transform: scaleX(1); }
+.btn span { position: relative; z-index: 1; }
+.btn:hover span, .btn:hover { color: var(--ink); }
+
+.hero-scroll {
+  position: absolute;
+  bottom: 40px; left: 50%;
+  transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  opacity: 0;
+  animation: fadeIn 1s ease 1.5s forwards;
+}
+.hero-scroll span {
+  font-family: var(--sans);
+  font-size: 0.6rem;
+  letter-spacing: 0.25em;
+  color: var(--mist-dim);
+  text-transform: uppercase;
+}
+.scroll-line {
+  width: 1px; height: 50px;
+  background: linear-gradient(to bottom, var(--gold), transparent);
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+@keyframes scrollPulse {
+  0%,100% { opacity:0.4; }
+  50% { opacity:1; }
+}
+
+/* SHARED */
+section { padding: 110px 5%; }
+.section-inner { max-width: 1180px; margin: 0 auto; }
+.section-header { text-align: center; margin-bottom: 70px; }
+.section-label {
+  font-family: var(--sans);
+  font-size: 0.65rem;
+  letter-spacing: 0.35em;
+  color: var(--gold);
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 16px;
+}
+.section-title {
+  font-family: var(--display);
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  color: var(--white);
+  position: relative;
+  display: inline-block;
+}
+.section-title::after {
+  content: '';
+  display: block;
+  width: 40px; height: 1px;
+  background: var(--gold);
+  margin: 18px auto 0;
+}
+
+.fade-in {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* POEMS */
+#poems { background: var(--deep); }
+.poems-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1px;
+  border: 1px solid var(--border);
+}
+.poem-card {
+  background: var(--card);
+  position: relative;
+  overflow: hidden;
+  transition: var(--transition);
+  cursor: pointer;
+}
+.poem-card-img-wrap { position: relative; overflow: hidden; height: 210px; }
+.poem-card-img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: brightness(0.5) saturate(0.45);
+  transition: filter 0.7s ease, transform 0.7s ease;
+}
+.poem-card:hover .poem-card-img {
+  filter: brightness(0.38) saturate(0.35);
+  transform: scale(1.05);
+}
+.poem-card-img-wrap::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 35%, var(--card) 100%);
+}
+.poem-card-body { padding: 28px 30px 32px; position: relative; }
+.poem-card-body::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 0; height: 2px;
+  background: var(--gold);
+  transition: width 0.5s ease;
+}
+.poem-card:hover .poem-card-body::before { width: 100%; }
+.poem-num {
+  font-family: var(--display);
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  color: var(--gold);
+  opacity: 0.6;
+  display: block;
+  margin-bottom: 14px;
+}
+.poem-card h3 {
+  font-family: var(--serif);
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--white);
+  margin-bottom: 14px;
+  line-height: 1.2;
+}
+.poem-card p {
+  font-size: 1rem;
+  color: var(--mist);
+  font-style: italic;
+  line-height: 1.9;
+  margin-bottom: 24px;
+}
+.read-more {
+  font-family: var(--sans);
+  font-size: 0.63rem;
+  letter-spacing: 0.22em;
+  color: var(--gold);
+  text-transform: uppercase;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  transition: gap var(--transition);
+}
+.read-more::after { content: '→'; font-size: 0.8rem; }
+.read-more:hover { gap: 16px; }
+
+/* GALLERY */
+#gallery { background: var(--ink); }
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+.gallery-item {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+.gallery-item:first-child { grid-column: span 2; grid-row: span 2; min-height: 480px; }
+.gallery-item:not(:first-child) { min-height: 235px; }
+.gallery-item img {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  filter: brightness(0.48) saturate(0.5);
+  transition: transform 0.8s ease, filter 0.6s ease;
+}
+.gallery-item:hover img {
+  transform: scale(1.07);
+  filter: brightness(0.36) saturate(0.4);
+}
+.gallery-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.12) 55%, transparent 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 28px;
+}
+.gallery-tag {
+  font-family: var(--sans);
+  font-size: 0.58rem;
+  letter-spacing: 0.3em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.gallery-overlay h4 {
+  font-family: var(--serif);
+  font-size: 1.25rem;
+  font-style: italic;
+  color: var(--white);
+  line-height: 1.4;
+}
+.gallery-item:first-child .gallery-overlay h4 { font-size: 1.85rem; }
+.gallery-overlay p {
+  font-size: 0.88rem;
+  color: var(--mist-dim);
+  margin-top: 6px;
+  font-style: italic;
+}
+.gallery-corner {
+  position: absolute;
+  top: 18px; right: 18px;
+  width: 32px; height: 32px;
+  border-top: 1px solid rgba(201,169,110,0.4);
+  border-right: 1px solid rgba(201,169,110,0.4);
+  transition: var(--transition);
+}
+.gallery-item:hover .gallery-corner { width: 42px; height: 42px; border-color: var(--gold); }
+
+/* ABOUT */
+#about { background: var(--deep); }
+.about-grid {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 80px;
+  align-items: start;
+}
+.about-portrait { position: relative; }
+.portrait-frame {
+  position: relative;
+  width: 100%;
+  padding-bottom: 125%;
+  overflow: hidden;
+}
+.portrait-frame img {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  filter: brightness(0.72) saturate(0.55) sepia(0.2);
+  transition: filter 0.6s ease;
+}
+.portrait-frame:hover img { filter: brightness(0.85) saturate(0.65) sepia(0.1); }
+.portrait-frame::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(17,17,22,0.65) 0%, transparent 50%);
+}
+.portrait-deco {
+  position: absolute;
+  top: 18px; right: -18px;
+  width: 80px; height: 80px;
+  border: 1px solid rgba(201,169,110,0.25);
+  z-index: -1;
+}
+.portrait-deco-2 {
+  position: absolute;
+  bottom: -18px; left: 18px;
+  width: 60px; height: 60px;
+  background: var(--gold-dim);
+  z-index: -1;
+}
+.about-text { padding-top: 12px; }
+.about-text blockquote {
+  font-family: var(--serif);
+  font-size: 1.7rem;
+  font-style: italic;
+  font-weight: 300;
+  color: var(--white);
+  line-height: 1.5;
+  margin-bottom: 32px;
+  padding-left: 24px;
+  border-left: 2px solid var(--gold);
+}
+.about-text p {
+  font-size: 1.08rem;
+  color: var(--mist);
+  line-height: 2;
+  margin-bottom: 20px;
+}
+.about-stats {
+  display: flex;
+  gap: 48px;
+  margin-top: 40px;
+  padding-top: 32px;
+  border-top: 1px solid var(--border);
+}
+.stat-num {
+  font-family: var(--display);
+  font-size: 2.2rem;
+  color: var(--gold);
+  display: block;
+  letter-spacing: 0.05em;
+}
+.stat-label {
+  font-family: var(--sans);
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  color: var(--mist-dim);
+  text-transform: uppercase;
+  margin-top: 4px;
+  display: block;
+}
+
+/* CONTACT */
+#contact { position: relative; background: var(--ink); overflow: hidden; }
+.contact-bg-img {
+  position: absolute;
+  inset: 0;
+  background-image: url('https://images.unsplash.com/photo-1455390582262-044cdead277a?w=1200&q=60&fit=crop&crop=bottom&auto=format');
+  background-size: cover;
+  background-position: center;
+  opacity: 0.07;
+  filter: grayscale(1);
+}
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+  position: relative;
+  z-index: 1;
+}
+.contact-info h3 {
+  font-family: var(--display);
+  font-size: 1.6rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  margin-bottom: 20px;
+}
+.contact-info p {
+  font-size: 1.05rem;
+  color: var(--mist);
+  font-style: italic;
+  line-height: 1.9;
+  margin-bottom: 36px;
+}
+.contact-detail {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 16px;
+  color: var(--mist);
+  font-size: 0.9rem;
+}
+.contact-detail-icon {
+  width: 32px; height: 32px;
+  border: 1px solid var(--border-hover);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.75rem;
+  color: var(--gold);
+  flex-shrink: 0;
+}
+.form-group { margin-bottom: 24px; }
+.form-group label {
+  display: block;
+  font-family: var(--sans);
+  font-size: 0.62rem;
+  letter-spacing: 0.25em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--white);
+  font-family: var(--serif);
+  font-size: 1rem;
+  padding: 14px 18px;
+  outline: none;
+  transition: border-color var(--transition), background var(--transition);
+  resize: none;
+}
+.form-group input::placeholder,
+.form-group textarea::placeholder { color: var(--mist-dim); font-style: italic; }
+.form-group input:focus,
+.form-group textarea:focus { border-color: var(--gold); background: var(--card); }
+.form-group textarea { min-height: 140px; }
+.form-submit {
+  display: block; width: 100%;
+  padding: 15px 44px;
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  background: transparent;
+  cursor: pointer;
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+.form-submit::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--transition);
+}
+.form-submit:hover::before { transform: scaleX(1); }
+.form-submit:hover { color: var(--ink); }
+.form-submit span { position: relative; z-index: 1; }
+
+/* FOOTER */
+footer {
+  background: var(--deep);
+  border-top: 1px solid var(--border);
+  padding: 50px 5% 36px;
+}
+.footer-inner {
+  max-width: 1180px; margin: 0 auto;
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 30px; flex-wrap: wrap;
+}
+.footer-logo { font-family: var(--display); font-size: 1rem; letter-spacing: 0.2em; color: var(--gold); }
+.footer-text { font-family: var(--sans); font-size: 0.65rem; letter-spacing: 0.1em; color: var(--mist-dim); }
+.footer-links { display: flex; gap: 28px; }
+.footer-links a {
+  font-family: var(--sans); font-size: 0.62rem; letter-spacing: 0.18em;
+  color: var(--mist-dim); text-decoration: none; text-transform: uppercase;
+  transition: color var(--transition);
+}
+.footer-links a:hover { color: var(--gold); }
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .nav-toggle { display: flex; }
+  nav {
+    position: fixed; top: 0; right: -100%; width: 70%; height: 100vh;
+    background: var(--deep); flex-direction: column; justify-content: center;
+    gap: 32px; border-left: 1px solid var(--border); transition: right var(--transition); z-index: 999;
+  }
+  nav.open { right: 0; }
+  nav a { font-size: 0.8rem; }
+  .gallery-grid { grid-template-columns: 1fr 1fr; }
+  .gallery-item:first-child { grid-column: span 2; min-height: 300px; }
+  .gallery-item:not(:first-child) { min-height: 160px; }
+  .about-grid { grid-template-columns: 1fr; gap: 48px; }
+  .about-portrait { max-width: 300px; }
+  .contact-grid { grid-template-columns: 1fr; gap: 48px; }
+  .about-stats { gap: 28px; }
+  .poems-grid { grid-template-columns: 1fr; }
+  section { padding: 80px 5%; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header id="site-header">
+  <a href="#" class="logo">W · V</a>
+  <nav id="main-nav">
+    <a href="#poems">Poems</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#about">The Poet</a>
+    <a href="#contact">Contact</a>
+  <a href="eternal-echoes.html">Eternal Echoes</a>
+    <a href="starlit-dreams.html">Starlit Dreams</a>
+  </nav>
+  <div class="nav-toggle" id="nav-toggle">
+    <span></span><span></span><span></span>
+  </div>
+</header>
+
+<!-- HERO — quill pen on parchment (Unsplash: Antoine Dautry) -->
+<section class="hero" id="home">
+  <div class="hero-img"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">A Collection of Living Words</p>
+    <h1>Whispers<br>of <em>Verse</em></h1>
+    <p class="hero-sub">Where silence becomes language, and every shadow holds a poem waiting to breathe.</p>
+    <a href="#poems" class="btn"><span>Explore Poems</span></a>
+  </div>
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- POEMS -->
+<section id="poems">
+  <div class="section-inner">
+    <div class="section-header fade-in">
+      <span class="section-label">Featured Works</span>
+      <h2 class="section-title">Highlighted Poems</h2>
+    </div>
+    <div class="poems-grid">
+
+      <div class="poem-card fade-in">
+        <div class="poem-card-img-wrap">
+          <!-- Old books in candlelight — Unsplash: Jaredd Craig -->
+          <img class="poem-card-img"
+               src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=600&q=80&fit=crop&auto=format"
+               alt="Candlelit open books">
+        </div>
+        <div class="poem-card-body">
+          <span class="poem-num">No. 01</span>
+          <h3>Echoes of Silence</h3>
+          <p>The quiet spaces between breaths are where the deepest truths reside. In stillness, the world speaks in whispers of forgotten memories and untold dreams.</p>
+          <a href="#" class="read-more">Read More</a>
+        </div>
+      </div>
+
+      <div class="poem-card fade-in" style="transition-delay:0.1s">
+        <div class="poem-card-img-wrap">
+          <!-- Misty forest — Unsplash: Johannes Plenio -->
+          <img class="poem-card-img"
+               src="https://images.unsplash.com/photo-1448375240586-882707db888b?w=600&q=80&fit=crop&auto=format"
+               alt="Misty dark forest path">
+        </div>
+        <div class="poem-card-body">
+          <span class="poem-num">No. 02</span>
+          <h3>The River's Flow</h3>
+          <p>Like a river, life is a constant flow — sometimes a rushing torrent, sometimes a gentle meandering stream. We must learn to adapt to the current's will.</p>
+          <a href="#" class="read-more">Read More</a>
+        </div>
+      </div>
+
+      <div class="poem-card fade-in" style="transition-delay:0.2s">
+        <div class="poem-card-img-wrap">
+          <!-- Dark stormy ocean — Unsplash: Johannes Plenio -->
+          <img class="poem-card-img"
+               src="https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=600&q=80&fit=crop&auto=format"
+               alt="Dark moody ocean">
+        </div>
+        <div class="poem-card-body">
+          <span class="poem-num">No. 03</span>
+          <h3>Shadow & Light</h3>
+          <p>Shadows reveal what light conceals. In the interplay of these ancient forces, we find the full complexity of the human condition, beautiful in contradiction.</p>
+          <a href="#" class="read-more">Read More</a>
+        </div>
+      </div>
+
+      <div class="poem-card fade-in" style="transition-delay:0.3s">
+        <div class="poem-card-img-wrap">
+          <!-- Night sky with stars — Unsplash: Vincentiu Solomon -->
+          <img class="poem-card-img"
+               src="https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=600&q=80&fit=crop&auto=format"
+               alt="Starry night sky">
+        </div>
+        <div class="poem-card-body">
+          <span class="poem-num">No. 04</span>
+          <h3>Midnight Garden</h3>
+          <p>In the hour when stars hold council and the moon turns silver pages, I tend the garden of unspoken words, planting seeds of morning in cold dark soil.</p>
+          <a href="#" class="read-more">Read More</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="section-inner">
+    <div class="section-header fade-in">
+      <span class="section-label">Visual Poetry</span>
+      <h2 class="section-title">Scenes & Fragments</h2>
+    </div>
+    <div class="gallery-grid">
+
+      <!-- Large: Quill writing on parchment — Antoine Dautry -->
+      <div class="gallery-item fade-in">
+        <img src="https://images.unsplash.com/photo-1455390582262-044cdead277a?w=900&q=80&fit=crop&auto=format" alt="Quill and ink poetry writing">
+        <div class="gallery-corner"></div>
+        <div class="gallery-overlay">
+          <span class="gallery-tag">Long Poem · 2024</span>
+          <h4>The Architecture of Grief</h4>
+          <p>A journey through rooms we cannot leave</p>
+        </div>
+      </div>
+
+      <!-- Stacked vintage books — Jaredd Craig -->
+      <div class="gallery-item fade-in" style="transition-delay:0.1s">
+        <img src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=600&q=80&fit=crop&crop=right&auto=format" alt="Stacked vintage poetry books">
+        <div class="gallery-corner"></div>
+        <div class="gallery-overlay">
+          <span class="gallery-tag">Haiku Series</span>
+          <h4>Morning Without You</h4>
+        </div>
+      </div>
+
+      <!-- Foggy mountain range — Samuel Ferrara -->
+      <div class="gallery-item fade-in" style="transition-delay:0.15s">
+        <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80&fit=crop&auto=format" alt="Foggy mountain landscape">
+        <div class="gallery-corner"></div>
+        <div class="gallery-overlay">
+          <span class="gallery-tag">Prose Poem</span>
+          <h4>Letters to Autumn</h4>
+        </div>
+      </div>
+
+      <!-- Dark moody forest — Nathan Anderson -->
+      <div class="gallery-item fade-in" style="transition-delay:0.2s">
+        <img src="https://images.unsplash.com/photo-1448375240586-882707db888b?w=600&q=80&fit=crop&crop=bottom&auto=format" alt="Dark foggy forest">
+        <div class="gallery-corner"></div>
+        <div class="gallery-overlay">
+          <span class="gallery-tag">Elegy</span>
+          <h4>For the Hours Lost</h4>
+        </div>
+      </div>
+
+      <!-- Night sky stars — Vincentiu Solomon -->
+      <div class="gallery-item fade-in" style="transition-delay:0.25s">
+        <img src="https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=600&q=80&fit=crop&crop=top&auto=format" alt="Dark starry night cosmos">
+        <div class="gallery-corner"></div>
+        <div class="gallery-overlay">
+          <span class="gallery-tag">Sonnet</span>
+          <h4>Cartography of Longing</h4>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-inner">
+    <div class="section-header fade-in">
+      <span class="section-label">The Poet</span>
+      <h2 class="section-title">About</h2>
+    </div>
+    <div class="about-grid">
+      <div class="about-portrait fade-in">
+        <div class="portrait-frame">
+          <!-- Person reading by window, moody — Unsplash: Road Trip with Raj -->
+          <img src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=600&q=80&fit=crop&crop=top&auto=format" alt="Poet silhouette reading by window">
+        </div>
+        <div class="portrait-deco"></div>
+        <div class="portrait-deco-2"></div>
+      </div>
+      
+<div class="about-text fade-in" style="transition-delay:0.15s">
+  <blockquote>K S Sooraj’s journey as a poet is defined by persistence, vision, and an unshakable devotion to language. With three published poetry collections, K has moved beyond the realm of experimentation into the creation of a sustained literary presence. Each book is not just a standalone work but part of a larger continuum—an evolving dialogue between personal reflection and universal resonance. The poems carry a distinctive voice that balances intimacy with clarity, weaving together themes of identity, resilience, and the search for meaning in everyday moments.</blockquote>
+  
+  <p>Publishing three collections is more than a milestone; it is proof of endurance in a field where many voices fade after a single attempt. K S Sooraj’s work demonstrates the discipline required to shape raw emotion into crafted verse, and the courage to share that verse with the world. Readers find in these books not only the poet’s story but also echoes of their own, a reminder that poetry is both deeply personal and profoundly communal. With each publication, K has expanded their reach, building credibility as a writer whose words are not fleeting but lasting.</p>
+  
+  <p>Together, these three books form a body of work that establishes K as a poet of continuity—someone who has carved out space in contemporary literature through dedication, craft, and the ability to connect across emotional landscapes. The collections stand as a testament to the power of persistence and the enduring relevance of poetry in a fast-changing world.</p>
+
+  <div class="about-stats">
+    <div>
+      <span class="stat-num">120+</span>
+      <span class="stat-label">Published Poems</span>
+    </div>
+    <div>
+      <span class="stat-num">3</span>
+      <span class="stat-label">Languages</span>
+    </div>
+  </div>
+</div><!-- end about-text -->
+</div><!-- end about-grid -->
+  </div><!-- end section-inner -->
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-bg-img"></div>
+  <div class="section-inner">
+    <div class="section-header fade-in">
+      <span class="section-label">Reach Out</span>
+      <h2 class="section-title">Contact</h2>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-info fade-in">
+        <h3>Begin a Conversation</h3>
+        <p>For readings, collaborations, permissions, or simply to share what a poem meant to you — every letter is welcomed as a gift.</p>
+        <div class="contact-detail">
+          <div class="contact-detail-icon">✉</div>
+          <span><a href="mailto:diya_sooraj22@outlook.com" class="__cf_email__" data-cfemail="03756671706643746b6a70736671706c6575667170662d606c6e">[email&#160;protected]</a></span>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-detail-icon">◎</div>
+          <span>New Delhi, India</span>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-detail-icon">◷</div>
+          <span>Replies within seven days</span>
+        </div>
+      </div>
+      <form class="fade-in" style="transition-delay:0.15s" onsubmit="handleSubmit(event)">
+        <div class="form-group">
+          <label>Your Name</label>
+          <input type="text" placeholder="What shall I call you?" required>
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" placeholder="Where to find you again" required>
+        </div>
+        <div class="form-group">
+          <label>Your Message</label>
+          <textarea placeholder="Speak freely — in prose or verse..." required></textarea>
+        </div>
+        <button type="submit" class="form-submit"><span>Send Your Words →</span></button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">Whispers of Verse</div>
+    <p class="footer-text">© 2026 · All rights reserved · Made with patience and ink</p>
+    <div class="footer-links">
+      <a href="#">Instagram</a>
+      <a href="#">Substack</a>
+      <a href="#">Press</a>
+    </div>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+const header = document.getElementById('site-header');
+window.addEventListener('scroll', () => {
+  header.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+const toggle = document.getElementById('nav-toggle');
+const nav = document.getElementById('main-nav');
+toggle.addEventListener('click', () => nav.classList.toggle('open'));
+nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => nav.classList.remove('open')));
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+function handleSubmit(e) {
+  e.preventDefault();
+  const btn = e.target.querySelector('.form-submit');
+  const original = btn.innerHTML;
+  btn.innerHTML = '<span>Message Sent ✓</span>';
+  btn.disabled = true;
+  setTimeout(() => { btn.innerHTML = original; btn.disabled = false; e.target.reset(); }, 3000);
+}
+</script>
+</body>
+</html>
